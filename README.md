@@ -7,20 +7,18 @@ done with pcb
 It's a small star shape desk tamagochi.
 
 ## BOM
-Xiao Esp32 c3    1       $10
 
-mpu6050.       1.        $3.5
+| Item | Quantity | Price |
+| :--- | :---: | ---: |
+| Xiao ESP32 C3 | 1 | $10.00 |
+| MPU6050 | 1 | $3.50 |
+| 0.96 OLED | 1 | $3.00 |
+| MX Switches | 2 | $5.00 |
+| Keycaps | 2 | $3.00 |
+| 10k Resistor | 1 | $0.10 |
+| Custom PCB | 1 | $6.30 |
+| **Total** | | **$29.90** |
 
-0.96 oled.     1.     $3
-
-MX switches.    2.    $5
-
-keycaps.      2.     $3
-
-10k resistor.  1.    $0.1
-
-the PCB that I made.  $6.3
-Total.       $29.9
 ## note for reviewers 
 seperate units of keycaps and mx switches are not found in my region so the total price,includes the bundle.sorry i couldn't find seperate units.
 

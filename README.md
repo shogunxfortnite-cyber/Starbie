@@ -8,7 +8,7 @@ It's a small star shape desk tamagochi.
 
 ## BOM
 
-| Item | Quantity | Price |
+| Item | Quantity | Price | Link |
 | :--- | :---: | ---: |
 | Xiao ESP32 C3 | 1 | $10.00 |https://robu.in/product/seeed-studio-xiao-esp32c3-tiny-mcu-board-with-wi-fi-and-ble-battery-charge-supported-power-efficiency-and-rich-interface|
 | MPU6050 | 1 | $3.50 |https://amzn.in/d/0dZdvS9x|

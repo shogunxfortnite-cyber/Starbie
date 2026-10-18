@@ -8,6 +8,7 @@ It's a small star shape desk tamagochi.
 
 ## BOM
 
+
 | Item | Quantity | Price | Link |
 | :--- | :---: | ---: |
 | Xiao ESP32 C3 | 1 | $10.00 |https://robu.in/product/seeed-studio-xiao-esp32c3-tiny-mcu-board-with-wi-fi-and-ble-battery-charge-supported-power-efficiency-and-rich-interface|
@@ -18,7 +19,8 @@ It's a small star shape desk tamagochi.
 | Keycaps | 2 | $3.00 |https://amzn.in/d/0em6eUiV|
 | 10k Resistor | 1 | $0.10 |https://robu.in/product/mf25-10k-multicomp-pro-through-hole-resistor-10-kohm-250-mw-%c2%b1-1-axial-leaded-250-v|
 | Custom PCB | 1 | $6.30 | robu.in|
-| **Total** | | **$29.90** |
+| Total | | $31.60 | |
+
 
 ## note for reviewers 
 seperate units of keycaps and mx switches are not found in my region so the total price,includes the bundle.sorry i couldn't find seperate units.

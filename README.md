@@ -32,15 +32,21 @@ for coding we will be using Arduino ide.
 
 you would need the library for it
 
-## working 
+## controlled by
 It is controlled by 2 switches and motion with the help of the mpu6050 module.
+
+## Working
+Starbie is a tiny motion-controlled digital pet: basically a desktop Tamagotchi with minimal gameplay buttons. Instead of pressing controls, you interact with it by physically moving the board.
 
 ## Note to the reviewers 
 You can edit this code to make your own custom tamagochi.
+
 ## secrets 
 This is made from a guide available at half life hack club. Pls guys if your under 18 and above 13 or 13 you can join this club.
+
 ## what did I use
 I used kicad for making the PCB schematic and routing the PCB. For the code I used the prebuolt template and edited it a bit 
+
 ## libraries required 
 
 Wire

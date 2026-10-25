@@ -53,6 +53,11 @@ Adafruit_MPU6050
 
 DHT
 
+
+## code
+
+You guys can use either arduino ide or esp if for this.
+
 math
 
 ## half life

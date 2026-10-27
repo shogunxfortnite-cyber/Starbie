@@ -11,7 +11,7 @@
 <img width="1724" height="927" alt="3dd" src="https://github.com/user-attachments/assets/52da45d5-e76c-4210-8f15-6a25485de5d0" />
 
 
-## what is it
+## What is it
 It's a small star shape desk tamagochi.
 
 ## BOM
@@ -32,10 +32,10 @@ It's a small star shape desk tamagochi.
 
 
 
-## note for reviewers 
+## Note for reviewers 
 seperate units of keycaps and mx switches are not found in my region so the total price,includes the bundle.sorry i couldn't find seperate units.
 
-## how to code
+## How to code
 
 We can either use the prebuilt libraries or use a custom code.
 

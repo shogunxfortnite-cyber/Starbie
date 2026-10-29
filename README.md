@@ -30,7 +30,7 @@ It is a small tamagochi. Koro sensei themed.
 
  If we press button 2 we can check its stats
  
-
+The temprature also infuencences the pet appearance.
 
 
 ## BOM
@@ -64,14 +64,13 @@ It is controlled by 2 switches and motion with the help of the mpu6050 module.
 ## Working
 starbie is a tiny motion-controlled digital pet — basicly a desktop tamagotchi with minimal gameplay buttons. instead of pressing controls, you interact with it by physically moving the board around.
 
-the brain of it is a seeed xiao esp32-c3, which runs the logic and pushes stuff to the oled. the mpu6050 reads motion — tilting, shaking, flipping the board, leaving it sitting still on your desk — all of that gets fed in and changes how the pet reacts on screen. so like if you tilt it one way the pet might get dizzy or happy, shake it and it gets startled, that sort of thing. makes it feel more alive then just mashing buttons.
+We are using esp 32 c3 as the main board.
 
-theres also a dht sensor hooked up that reads temp and humidity, and those values also nudge the pet's state a bit (not a huge gameplay thing but it adds some flavor). the two switches handle the basic stuff — feeding, resetting, that kind of interaction.
+Also a MPU6050 for integrating motion control into it.
 
-whole thing was designed to be compact and portable-ish. pcb is small, case is 3d printed with a keychain hole so you can actually carry it around instead of it just sitting on your desk forever.
+2 MX switches for selection.
 
-one thing to note — the motion part is a bit twitchy depending on how you set the mpu6050 thresholds. i had to tune mine a few times before the pet stoped reacting to every tiny vibration on the table lol. also the oled refresh can lag a little if you poll the sensors too fast, so the loop timing matters more then you'd think. and ngl the first version i built kept freezing every few minuts until i relised the wire library needed a delay in the setup, so watch out for that
-
+A oled screen for seeing the pet.
 
 ## Note to the reviewers 
 You can edit this code to make your own custom tamagochi.

@@ -1,10 +1,3 @@
-/*
-  Mini Koro-sensei: a tiny motion-controlled digital pet
-
-  Open in Arduino IDE and upload to a Seeed XIAO ESP32-C3.
-  Libraries: Adafruit GFX, Adafruit SSD1306, Adafruit MPU6050, DHT sensor library.
-*/
-
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -12,8 +5,6 @@
 #include <DHT.h>
 #include <Preferences.h>
 #include <math.h>
-
-// =========================== SETTINGS ===========================
 
 const int I2C_SDA_PIN = 6;
 const int I2C_SCL_PIN = 7;
@@ -78,6 +69,23 @@ const uint16_t PRAISE_DURATION_MS = 1600;
 const uint16_t TICKLE_LAP_MS = 800;
 const uint8_t TICKLE_LAP_COUNT = 2;
 
+const float TEMP_COLD_C        = 18.0f;
+const float TEMP_HOT_C         = 27.0f;
+const float TEMP_EXTREME_LOW_C = 10.0f;
+const float TEMP_EXTREME_HIGH_C= 35.0f;
+
+const uint32_t TEMP_MOOD_TICK_MS = 8000;
+const int TEMP_MOOD_COLD        = -1;
+const int TEMP_MOOD_HOT         = -1;
+const int TEMP_MOOD_EXTREME     = -3;
+const int TEMP_MOOD_COMFORT     =  1;
+const int TEMP_STAM_EXTREME     = -1;
+
+const uint16_t WALK_PIXEL_MS_COLD = 110;
+const uint16_t WALK_PIXEL_MS_HOT  = 45;
+
+const uint16_t TEMP_SHAKE_EFFECT_MS = 600;
+
 const uint8_t PROGMEM PET_SPRITE[] = {
   0x00, 0x00, 0x00, 0x00,
   0x00, 0x3f, 0xfc, 0x00,
@@ -112,7 +120,6 @@ const uint8_t PROGMEM PET_SPRITE[] = {
   0x06, 0x00, 0x00, 0x60,
   0x18, 0x00, 0x00, 0x18,
 };
-// ===============================================================
 
 const int SCREEN_WIDTH = 128;
 const int SCREEN_HEIGHT = 64;
@@ -179,10 +186,22 @@ uint32_t praiseAnimationEndsAt = 0;
 uint32_t tickleRunStartedAt = 0;
 int teachingPetX = 0;
 
+uint32_t lastTempMoodTickAt = 0;
+uint32_t tempReactionEndsAt = 0;
+int lastTempBucket = 1;
+
 int petWalkingX(uint32_t now);
 
 int keepInRange(int value, int smallest, int largest) {
   return constrain(value, smallest, largest);
+}
+
+int tempBucket() {
+  if (isnan(temperatureC)) return 1;
+  if (temperatureC < TEMP_EXTREME_LOW_C || temperatureC > TEMP_EXTREME_HIGH_C) return 3;
+  if (temperatureC < TEMP_COLD_C) return 0;
+  if (temperatureC > TEMP_HOT_C)  return 2;
+  return 1;
 }
 
 void changePet(int moodChange, int staminaChange, int sweetsChange) {
@@ -263,10 +282,53 @@ void updateDht() {
   }
 }
 
+void updateTemperatureBehavior() {
+  const uint32_t now = millis();
+  const int bucket = tempBucket();
+
+  if (bucket != lastTempBucket) {
+    lastTempBucket = bucket;
+    if (bucket != 1) {
+      tempReactionEndsAt = now + TEMP_SHAKE_EFFECT_MS;
+    }
+  }
+
+  if (now - lastTempMoodTickAt < TEMP_MOOD_TICK_MS) return;
+  lastTempMoodTickAt = now;
+
+  int moodDelta = 0;
+  int stamDelta = 0;
+  switch (bucket) {
+    case 0: moodDelta = TEMP_MOOD_COLD;   break;
+    case 2: moodDelta = TEMP_MOOD_HOT;    break;
+    case 3: moodDelta = TEMP_MOOD_EXTREME; stamDelta = TEMP_STAM_EXTREME; break;
+    default: moodDelta = TEMP_MOOD_COMFORT; break;
+  }
+
+  if (bucket == 1 && (isTeaching() || isTickleRunning())) return;
+
+  const int oldMood = pet.mood;
+  const int oldStam = pet.stamina;
+  changePet(moodDelta, stamDelta, 0);
+
+  if (pet.mood != oldMood || pet.stamina != oldStam) {
+    savePet();
+  }
+}
+
 int petWalkingX(uint32_t now) {
+  uint16_t pixelMs = PET_WALK_PIXEL_MS;
+  const int bucket = tempBucket();
+  if (bucket == 0 || (bucket == 3 && temperatureC < TEMP_COLD_C)) {
+    pixelMs = WALK_PIXEL_MS_COLD;
+  } else if (bucket == 2 || (bucket == 3 && temperatureC > TEMP_HOT_C)) {
+    pixelMs = WALK_PIXEL_MS_HOT;
+  }
+  if (pixelMs == 0) pixelMs = PET_WALK_PIXEL_MS;
+
   const int farthestX = SCREEN_WIDTH - PET_SPRITE_WIDTH;
   const uint32_t roundTrip = static_cast<uint32_t>(farthestX) * 2;
-  const uint32_t step = (now / PET_WALK_PIXEL_MS) % roundTrip;
+  const uint32_t step = (now / pixelMs) % roundTrip;
   return step <= farthestX ? step : roundTrip - step;
 }
 
@@ -480,6 +542,30 @@ void drawPet() {
     drawTeachingText(now, petX, petY);
   }
   drawPraiseText(now, petX, petY);
+
+  const int bucket = tempBucket();
+  if (!isnan(temperatureC)) {
+    if (bucket == 0 || (bucket == 3 && temperatureC < TEMP_COLD_C)) {
+      const int off = static_cast<int>((now / 40) % 4);
+      for (int i = 0; i < 2; i++) {
+        display.drawLine(petX + 30 + off, petY + 6 + i * 5,
+                         petX + 34 + off, petY + 10 + i * 5, SSD1306_WHITE);
+      }
+    } else if (bucket == 2 || (bucket == 3 && temperatureC > TEMP_HOT_C)) {
+      const int drip = static_cast<int>((now / 60) % 5);
+      display.drawLine(petX + 28, petY + 4 + drip, petX + 28, petY + 8 + drip, SSD1306_WHITE);
+      display.drawPixel(petX + 28, petY + 9 + drip, SSD1306_WHITE);
+    } else if (bucket == 1) {
+      if ((now / 900) % 3 == 0) {
+        display.drawPixel(petX + 27, petY + 3, SSD1306_WHITE);
+      }
+    }
+  }
+
+  if (now < tempReactionEndsAt) {
+    const int wobble = static_cast<int>(sinf(now / 15.0f) * 2.0f);
+    display.drawLine(petX - 4, petY + 14 + wobble, petX - 1, petY + 14 + wobble, SSD1306_WHITE);
+  }
 }
 
 void drawMenuItem(int item) {
@@ -552,6 +638,10 @@ void drawStats() {
   } else {
     display.print("H--");
   }
+
+  const int b = tempBucket();
+  display.setCursor(110, 55);
+  display.print(b == 0 ? "COLD" : b == 2 ? "HOT " : b == 3 ? "XTRE" : "OK  ");
 }
 
 void drawCurrentView() {
@@ -599,6 +689,7 @@ void setup() {
 void loop() {
   updateMpu();
   updateDht();
+  updateTemperatureBehavior();
   updatePetTimers();
   handleButtons();
 

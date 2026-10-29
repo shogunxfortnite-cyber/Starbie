@@ -77,8 +77,8 @@ A oled screen for seeing the pet.
 ## Note to the reviewers 
 You can edit this code to make your own custom tamagochi.
 
-## secrets 
-This is made from a guide available at half life hack club. Pls guys if your under 18 and above 13 or 13 you can join this club.
+## challenges I faced
+Main challenge that I faced is that it was my first time designing a PCB. At first I thought I might give up but I was determined to continue knowing that it might also get rejected. I learnt it suprisingly fast. I wouldnt even have known about pcbs if hack club wasnt there.
 
 ## what did I use
 I used kicad for making the PCB schematic and routing the PCB. For the code I used the prebuolt template and edited it a bit 

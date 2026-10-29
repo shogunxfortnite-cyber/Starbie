@@ -13,7 +13,22 @@
 
 ## What is it (my uniqueness)
 It is a small tamagochi. Koro sensei themed. 
+
  ###### Working
+ 
+ When left idle it walks back and forth of the screen.
+
+ When we shake the screen its mood drops and his stamina increases (Becomes angry).
+
+ We can tickle  the pet by pressing a button and tilting the thing. It says nyu or nyfu.
+
+ If we lilt up to teach and press button 1 it goes into teach mode.
+
+ If we tilt down to snack and press button 1 it becomes happy and starts hoping around the screen.
+
+ If we tilt to praise it says nfu or nyu and jumps.
+
+ If we press button 2 we can check its stats
  
 
 

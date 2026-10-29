@@ -37,17 +37,19 @@ The temprature also infuencences the pet appearance.
 
 
 
+
 | Item | Quantity | Price | Link |
 | :--- | :---: | ---: | :--- |
-| Xiao ESP32 C3 | 1 | $10.00 | https://robu.in/product/seeed-studio-xiao-esp32c3-tiny-mcu-board-with-wi-fi-and-ble-battery-charge-supported-power-efficiency-and-rich-interface |
-| MPU6050 | 1 | $3.50 | https://amzn.in/d/0dZdvS9x |
+| Xiao ESP32 C3 | 1 | $7.50 | https://robu.in/product/seeed-studio-xiao-esp32c3-tiny-mcu-board-with-wi-fi-and-ble-battery-charge-supported-power-efficiency-and-rich-interface |
+| MPU6050 | 1 | $3.00 | https://amzn.in/d/0dZdvS9x |
 | 0.96 OLED | 1 | $3.00 | https://robu.in/product/0-96-inch-i2c-iic-oled-lcd-module-4pin-with-vcc-gnd-blue |
-| DHT 11 module | 1 | $0.7 | https://robu.in/product/dht11-digital-relative-humidity-temperature-sensor-module |
-| MX Switches | 2 | $5.00 | https://amzn.in/d/0bCMinFX |
-| Keycaps | 2 | $3.00 | https://amzn.in/d/0em6eUiV |
+| DHT 11 module | 1 | $1.00 | https://robu.in/product/dht11-digital-relative-humidity-temperature-sensor-module |
+| MX Switches | 1 | $5.00 | https://amzn.in/d/0bCMinFX |
+| Keycaps | 1 | $3.50 | https://amzn.in/d/0em6eUiV |
 | 10k Resistor | 1 | $0.10 | https://robu.in/product/mf25-10k-multicomp-pro-through-hole-resistor-10-kohm-250-mw-%c2%b1-1-axial-leaded-250-v |
-| Custom PCB | 1 | $6.30 | robu.in |
-| Total | | $31.60 | |
+| Custom PCB | 1 | $9.00 | https://robu.in |
+| **Total** | | **$32.10** | |
+
 
 
 
